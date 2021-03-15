@@ -1,4 +1,5 @@
 import numpy as np
+import sys
 from matplotlib import pyplot as plt
 import scipy.io.wavfile as wav
 from numpy.lib import stride_tricks
@@ -83,4 +84,16 @@ def plotstft(audiopath, plotpath=None, binsize=2**10, colormap="jet"):
 
     return ims
 
-ims = plotstft('./audio/trumpet.wav', './exports/thisIsTheOne.png')
+def main():
+  if (len(sys.argv) <= 2):
+    print("Should provide args: main.py --audio-path [path of the .wav file]")
+    return
+
+  filePath = sys.argv[ sys.argv.index('--path') + 1 ]
+  filePathArr = filePath.split("/")
+  fileName = filePathArr[len(filePathArr) - 1]
+
+  plotstft( './audio/{}'.format(fileName) , './exports/{}.png'.format(fileName.split(".")[0])  )
+
+if __name__ == "__main__":
+  main()
